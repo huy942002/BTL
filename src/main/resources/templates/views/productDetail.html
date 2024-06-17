@@ -1,0 +1,115 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/views/gallery :: dynamic (~{::main})}">
+    <main>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-8">
+                <div class="border" style="    background: #f7f7f7; height:30px;">
+                    <a href="" class="link-dark" style="text-decoration: none;">Trang chủ ></a>
+                    <a href="" class="link-dark" style="text-decoration: none;">[[${product.productCategory.totalCategory.name}]]></a>
+                    <a href="" class="link-dark" style="text-decoration: none;">[[${product.productCategory.productCategoryName}]]</a>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-4">
+                        <label for="image">
+                            <img th:src="@{'/files/'+${product.img}}" alt=""
+                                 style="height: 400px; width:100%;" id="image">
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <h1>[[${product.name}]]</h1>
+                        <div ng-switch="form.dimension">
+                            <div ng-if="form.dimension == null">
+                                <h3 class="text-danger">[[${dimensionDetail[0].price}]]/
+                                    <b th:if="*{product.productCategory.productCategoryName == 'Tủ bếp'}">Mét dài</b>
+                                    <th:block th:unless="*{product.productCategory.productCategoryName == 'Tủ bếp'}">
+                                        <th:block
+                                                th:switch="*{product.productCategory.productCategoryName == 'Bàn ghế'}">
+                                            <b th:case="true">Bộ</b>
+                                            <b th:case="*">Cái</b>
+                                        </th:block>
+                                    </th:block>
+                                </h3>
+                            </div>
+                            <div th:each="d: ${dimensionDetail}" th:attr="ng-switch-when=${d.dimension.id}">
+                                <h3 class="text-danger">[[${d.price}]]/
+                                    <b th:if="*{product.productCategory.productCategoryName == 'Tủ bếp'}">Mét dài</b>
+                                    <th:block th:unless="*{product.productCategory.productCategoryName == 'Tủ bếp'}">
+                                        <th:block
+                                                th:switch="*{product.productCategory.productCategoryName == 'Bàn ghế'}">
+                                            <b th:case="true">Bộ</b>
+                                            <b th:case="*">Cái</b>
+                                        </th:block>
+                                    </th:block>
+                                </h3>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <label>Màu Sắc</label>
+                                <div class="row">
+                                    <div class="row btn-group" role="group"
+                                         aria-label="Basic radio toggle button group">
+                                        <div class="col-2" th:each="c: ${colorDetail}">
+                                            <input type="radio" class="btn-check" name="btnradiocolor"
+                                                   ng-model="form.color"
+                                                   th:id="${c.color.colorName}" autocomplete="off"
+                                                   th:attr="value=${c.color.id}">
+                                            <label class="btn btn-outline-primary" th:for="${c.color.colorName}"><img
+                                                    th:src="@{'/files/'+${c.color.img}}"
+                                                    style="height:70px; width:70px;">[[${c.color.colorName}]]</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Chất liệu</label>
+                                    <div class="border text-center" style="width: 15%;">
+                                        <p>[[${product.material.materialName}]]</p>
+                                    </div>
+                                </div>
+                                <label class="mt-3">Kích Thước</label>
+                                <div class="row">
+                                    <div class="row btn-group" role="group"
+                                         aria-label="Basic radio toggle button group">
+                                        <div class="col-3" th:each="d : ${dimensionDetail}">
+                                            <input type="radio" class="btn-check" name="btnradiodimension"
+                                                   ng-model="form.dimension" th:attr="value=${d.dimension.id}"
+                                                   th:id="${d.dimension.id}" autocomplete="off">
+                                            <label class="btn btn-outline-primary" th:for="${d.dimension.id}">[[${d.dimension.size}]]</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-2">
+                                        <input type="number" class="form-control" ng-model="form.quantity" id="myInput"
+                                               style="height:48px;">
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-primary btn-lg"
+                                                th:attr="ng-click=@{|cart.add(${product.id})|}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                                            </svg>
+                                            Thêm Vào Giỏ
+                                        </button>
+                                    </div>
+                                    <div class="col-3">
+                                        <button type="button" class="btn btn-danger btn-lg">Mua Ngay</button>
+                                    </div>
+                                    <div class="col-3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2"></div>
+        </div>
+        <br>
+        <br>
+        <hr>
+        <div th:replace="~{/views/relatedProducts}"></div>
+    </main>
+</div>

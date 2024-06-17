@@ -1,0 +1,136 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/views/admin/index :: dynamic (~{::main})}">
+  <main>
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 col-lg-12">
+            <div class="card">
+              <div class="card-header">Order Tables
+              </div>
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush table-borderless">
+                  <thead>
+                  <tr>
+                    <th>Tên</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Địa Chỉ</th>
+                    <th>Ngày đặt</th>
+                    <th>Thao tác</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr th:each="o :${listOrder}">
+                    <td>[[${o.fullname}]]</td>
+                    <td>[[${o.sdt}]]</td>
+                    <td>[[${o.address}]]</td>
+                    <td>[[${o.createDate}]]</td>
+                    <td><a class=""
+                           th:href="@{/admin/orderDetail/{id}(id=${o.id})}"
+                           role="button">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                           height="16" fill="currentColor"
+                           class="bi bi-pencil-square"
+                           viewBox="0 0 16 16">
+                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                        <path fill-rule="evenodd"
+                              d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                      </svg>
+                    </a></td>
+                  </tr>
+                  </tbody>
+                </table>
+
+<!--                <table class="table align-items-center table-flush table-borderless">-->
+<!--                  <thead>-->
+<!--                  <tr>-->
+<!--                    <th>Tên</th>-->
+<!--                    <th>Số Điện Thoại</th>-->
+<!--                    <th>Địa Chỉ</th>-->
+<!--                    <th>Ngày đặt</th>-->
+<!--                  </tr>-->
+<!--                  </thead>-->
+<!--                  <tbody><tr>-->
+<!--                    <td>Iphone 5</td>-->
+<!--                    <td><img src="https://via.placeholder.com/110x110" class="product-img" alt="product img"></td>-->
+<!--                    <td>#9405822</td>-->
+<!--                    <td>$ 1250.00</td>-->
+<!--                    <td>03 Aug 2017</td>-->
+<!--                    <td><div class="progress shadow" style="height: 3px;">-->
+<!--                      <div class="progress-bar" role="progressbar" style="width: 90%"></div>-->
+<!--                    </div></td>-->
+<!--                  </tr>-->
+
+<!--                  <tr>-->
+<!--                    <td>Earphone GL</td>-->
+<!--                    <td><img src="https://via.placeholder.com/110x110" class="product-img" alt="product img"></td>-->
+<!--                    <td>#9405820</td>-->
+<!--                    <td>$ 1500.00</td>-->
+<!--                    <td>03 Aug 2017</td>-->
+<!--                    <td><div class="progress shadow" style="height: 3px;">-->
+<!--                      <div class="progress-bar" role="progressbar" style="width: 60%"></div>-->
+<!--                    </div></td>-->
+<!--                  </tr>-->
+
+<!--                  <tr>-->
+<!--                    <td>HD Hand Camera</td>-->
+<!--                    <td><img src="https://via.placeholder.com/110x110" class="product-img" alt="product img"></td>-->
+<!--                    <td>#9405830</td>-->
+<!--                    <td>$ 1400.00</td>-->
+<!--                    <td>03 Aug 2017</td>-->
+<!--                    <td><div class="progress shadow" style="height: 3px;">-->
+<!--                      <div class="progress-bar" role="progressbar" style="width: 70%"></div>-->
+<!--                    </div></td>-->
+<!--                  </tr>-->
+
+<!--                  <tr>-->
+<!--                    <td>Clasic Shoes</td>-->
+<!--                    <td><img src="https://via.placeholder.com/110x110" class="product-img" alt="product img"></td>-->
+<!--                    <td>#9405825</td>-->
+<!--                    <td>$ 1200.00</td>-->
+<!--                    <td>03 Aug 2017</td>-->
+<!--                    <td><div class="progress shadow" style="height: 3px;">-->
+<!--                      <div class="progress-bar" role="progressbar" style="width: 100%"></div>-->
+<!--                    </div></td>-->
+<!--                  </tr>-->
+
+<!--                  <tr>-->
+<!--                    <td>Hand Watch</td>-->
+<!--                    <td><img src="https://via.placeholder.com/110x110" class="product-img" alt="product img"></td>-->
+<!--                    <td>#9405840</td>-->
+<!--                    <td>$ 1800.00</td>-->
+<!--                    <td>03 Aug 2017</td>-->
+<!--                    <td><div class="progress shadow" style="height: 3px;">-->
+<!--                      <div class="progress-bar" role="progressbar" style="width: 40%"></div>-->
+<!--                    </div></td>-->
+<!--                  </tr>-->
+
+<!--                  <tr>-->
+<!--                    <td>Clasic Shoes</td>-->
+<!--                    <td><img src="https://via.placeholder.com/110x110" class="product-img" alt="product img"></td>-->
+<!--                    <td>#9405825</td>-->
+<!--                    <td>$ 1200.00</td>-->
+<!--                    <td>03 Aug 2017</td>-->
+<!--                    <td><div class="progress shadow" style="height: 3px;">-->
+<!--                      <div class="progress-bar" role="progressbar" style="width: 100%"></div>-->
+<!--                    </div></td>-->
+<!--                  </tr>-->
+
+<!--                  </tbody>-->
+<!--                </table>-->
+              </div>
+            </div>
+          </div>
+        </div><!--End Row-->
+
+        <!--End Dashboard Content-->
+
+        <!--start overlay-->
+        <div class="overlay toggle-menu"></div>
+        <!--end overlay-->
+
+      </div>
+      <!-- End container-fluid-->
+
+    </div><!--End content-wrapper-->
+  </main>
+</div>

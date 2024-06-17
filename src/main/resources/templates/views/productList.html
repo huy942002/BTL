@@ -1,0 +1,69 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/views/gallery :: dynamic (~{::main})}">
+  <main class="m-1">
+    <div class="row">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="row">
+          <div class="col-4">
+            <div class="form-group">
+              <label for="categoryFilter">Thể Loại:</label>
+              <select id="categoryFilter" class="form-control">
+                <option value="">Tất cả thể loại</option>
+                <option th:each="category : ${listPC}" th:text="${category.productCategoryName}" th:value="${category.id}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="form-group">
+              <label for="materialFilter">Vật liệu:</label>
+              <select id="materialFilter" class="form-control">
+                <option value="">Tất cả vật liệu</option>
+                <option th:each="material : ${materials}" th:text="${material.materialName}" th:value="${material.materialName}"></option>
+              </select>
+            </div>
+          </div>
+          <div class="col-4"></div>
+        </div>
+        <div class="row">
+          <input type="text" class="form-control" id="filterInput" placeholder="Search...">
+        </div>
+        <div class="row" id="dataContainer">
+          <div th:each="item : ${items}" th:id="'item-' + ${item.product.id}" th:class="'item ' + ${item.product.productCategory.id} + ' ' + ${item.product.material.materialName} + ' ' + 'col-3 mt-3'">
+            <a th:href="@{'/product/detail/'+${item.product.id}}" style="text-decoration: none;"
+              th:attr="ng-click=@{|cart.selectProduct(${item.product.id})|}">
+              <div class="card">
+                <img th:src="@{'/files/'+${item.product.img}}" class="card-img-top" alt="..." style="height: 250px;">
+                <div class="card-body">
+                  <h5 class="card-title fs-6">[[${item.product.name}]]</h5>
+                  <h7 class="text-white bg-success mt-2">HÀNG THI CÔNG</h7>
+                  <p class="card-text text-danger mt-2">[[${item.priceMin}]]/
+                    <b th:if="*{item.product.productCategory.productCategoryName == 'Tủ bếp'}">Mét dài</b>
+                    <th:block th:unless="*{item.product.productCategory.productCategoryName == 'Tủ bếp'}">
+                      <th:block th:switch="*{item.product.productCategory.productCategoryName == 'Bàn ghế'}">
+                        <b th:case="true">Bộ</b>
+                        <b th:case="*">Cái</b>
+                      </th:block>
+                    </th:block>
+                  </p>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="col-2"></div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item" th:each="i: ${#numbers.sequence(1, totalPages)}"><a class="page-link"
+                th:href="@{'/product/' + ${i}}">[[${i}]]</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-2"></div>
+    </div>
+  </main>
+</div>

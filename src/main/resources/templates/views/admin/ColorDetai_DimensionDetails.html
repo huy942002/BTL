@@ -1,0 +1,223 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/views/admin/index :: dynamic (~{::main})}">
+    <main>
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <span class="display-3" th:text="${message}"></span>
+                <div class="row mt-3">
+                    <div class="col-lg-4">
+                        <label for="image">
+                            <img th:src="@{'/files/'+${product.img}}" alt=""
+                                 style="height: 100%; width:100%;" id="image">
+                        </label>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Chi Tiết Sản Phẩm</h5>
+                                <form th:action="@{'/admin/update/'+${product.id}}" th:object="${product}" method="post"
+                                      enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="input-1">Name</label>
+                                        <input type="text" class="form-control" id="input-1" th:field="*{name}"
+                                               placeholder="Enter Product Name">
+                                        <i class="pt-2 text-danger" th:errors="*{name}"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-2">Danh mục</label>
+                                        <select class="form-control" id="input-2" th:field="*{productCategory}">
+                                            <option th:each="ctg : ${listPC}" th:value="${ctg.id}"
+                                                    th:text="${ctg.productCategoryName}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-3">Vật liệu</label>
+                                        <select class="form-control" id="input-3" th:field="*{material}">
+                                            <option th:each="mtl : ${mtllist}" th:value="${mtl.materialsId}"
+                                                    th:text="${mtl.materialName}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-4">Ảnh</label>
+                                        <input class="form-control" type="file" name="file" accept="image/*" multiple
+                                               id="input-4"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-light px-5"><i class="icon-lock"></i>
+                                            Register
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Bảng Chi Tiết Màu Sắc</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Tên Màu</th>
+                                            <th>Ảnh</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="cdl : ${colorDetail}">
+                                            <td>[[${cdl.color.colorName}]]</td>
+                                            <td><img th:src="@{|/files/${cdl.color.img}|}" alt=""
+                                                     style="height: 150px; width:250px;"></td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-12 pt-2 text-center">
+                                                        <button type="button" class="btn btn-danger">Xóa</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Bảng Chi Tiết Kích Thước</h5>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th>Kích Thước</th>
+                                            <th>Giá</th>
+                                            <th>Thao tác</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="dmsd : ${dimensionDetail}">
+                                            <td>[[${dmsd.dimension.size}]]</td>
+                                            <td>[[${dmsd.price}]]</td>
+                                            <td>
+                                                <div class="row">
+                                                    <div class="col-12 pt-2 text-center">
+                                                        <button type="button" class="btn btn-danger">Xóa</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">Chi Tiết Màu Sắc</div>
+                                <hr>
+                                <form th:action="@{'/admin/create/colorDetail/'+${product.id}}" th:object="${colors}"
+                                      method="post">
+                                    <div class="form-group">
+                                        <label>Color</label>
+                                        <p>
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                    data-target="#collapseExample" aria-expanded="false"
+                                                    aria-controls="collapseExample">Show
+                                            </button>
+                                        </p>
+                                        <div class="collapse" id="collapseExample">
+                                            <div class="form-group">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Tên</th>
+                                                        <th>Img</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="item : ${colors}">
+                                                        <td>[[${item.colorName}]]</td>
+                                                        <td><img th:src="@{|/files/${item.img}|}" alt=""
+                                                                 style="height: 150px; width:250px;"></td>
+                                                        <td>
+                                                            <input type="checkbox" name="cers" th:value="${item.id}"/>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-light btn-round px-5"><i
+                                                class="icon-lock"></i> Register
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="card-title">Chi Tiết Kích Thước</div>
+                                <hr>
+                                <form th:action="@{'/admin/create/dimensionDetail/'+${product.id}}"
+                                      th:object="${dimensions}" method="post">
+                                    <div class="form-group">
+                                        <label>Kích Thước</label>
+                                        <p>
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                                    data-target="#collapseExample2" aria-expanded="false"
+                                                    aria-controls="collapseExample2">Show
+                                            </button>
+                                        </p>
+                                        <div class="collapse" id="collapseExample2">
+                                            <div class="form-group">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Size</th>
+                                                        <th>Price</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr th:each="dimension : ${dimensions}">
+                                                        <td>[[${dimension.size}]]</td>
+                                                        <td><input type="number" name="prices"/></td>
+                                                        <td>
+                                                            <input type="checkbox" name="cers"
+                                                                   th:value="${dimension.id}"/>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-light btn-round px-5"><i
+                                                class="icon-lock"></i> Register
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End container-fluid-->
+        </div>
+    </main>
+</div>

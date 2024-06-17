@@ -1,0 +1,94 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/views/gallery :: dynamic (~{::main})}">
+    <main>
+        <div class="row mb-5">
+            <div class="col-1"></div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Thông tin khách hàng</h5>
+                        <form name="myform" novalidate>
+                            <div class="form-group mt-4">
+                                <label for="input-1">Tên Khách Hàng</label>
+                                <input type="text" class="form-control" id="input-1" ng-model="formOder.fullname"
+                                    name="fullnames" placeholder="Nhập tên" required>
+                                    <span class="text-danger" ng-show="myform.fullnames.$error.required">*Tên khách hàng bắt buộc.</span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="input-2">Số Điện Thoại</label>
+                                <input type="text" class="form-control" id="input-2" ng-model="formOder.sdt" name="sdts"
+                                    placeholder="Nhập số điện thoại" required>
+                                    <span class="text-danger" ng-show="myform.sdts.$error.required">*Số Điện Thoại bắt buộc.</span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label for="input-3">Địa Chỉ</label>
+                                <input type="text" class="form-control" id="input-3" ng-model="formOder.address"
+                                    name="addresss" placeholder="Nhập Địa Chỉ" required>                             
+                                    <span class="text-danger" ng-show="myform.addresss.$error.required">*Địa Chỉ bắt buộc.</span>
+                            </div>
+                            <div class="form-group pt-4">
+                                <button type="submit" class="btn btn-light px-5" ng-click="order.purchase()" ng-disabled="myform.addresss.$error.required || myform.fullnames.$error.required || myform.sdts.$error.required "><i class="icon-lock"></i>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-cart-check" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0z" />
+                                        <path
+                                            d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1zm3.915 10L3.102 4h10.796l-1.313 7zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0m7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                    </svg>
+                                    Xác Nhận Đặt Hàng
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="panel panel-success" th:fragment="cart_frag">
+                    <div class="panel-heading">Giỏ hàng</div>
+                    <div ng-if="!cart.count" class="panel-body text-center">
+                        <h3 style="font-variant: small-caps;">Không có sản phẩm nào</h3>
+                    </div>
+                    <table ng-if="cart.count" class="table">
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Màu sắc</th>
+                                <th>Kích thước</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in cart.items">
+                                <td>{{item.product.name}}</td>
+                                <td>{{item.color.colorName}}</td>
+                                <td>{{item.dimension.size}}</td>
+                                <td>{{item.price}}đ</td>
+                                <td><input ng-change="cart.saveToLocalStorage()" ng-model="item.quantity" type="number"
+                                        min="1" style="width:60px;" /></td>
+                                <td>{{cart.amt_of(item)}}đ</td>
+                                <td>
+                                    <a ng-click="cart.remove(item.id)" class="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                            <path
+                                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                            <path
+                                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-if="cart.items.length" class="panel-footer">
+                        <button ng-click="cart.clear()" class="btn btn-danger">
+                            <i class="glyphicon glyphicon-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

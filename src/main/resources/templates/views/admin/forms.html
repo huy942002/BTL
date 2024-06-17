@@ -1,0 +1,53 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/views/admin/index :: dynamic (~{::main})}">
+  <main>
+    <div class="content-wrapper">
+      <div class="container-fluid">
+        <span class="display-3" th:text="${message}"></span>
+        <div class="row mt-3">
+          <div class="col-lg-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">Product Form</div>
+                <hr>
+                <form th:action="@{/admin/add}" th:object="${product}" method="post" enctype="multipart/form-data">
+                  <div class="form-group">
+                    <label for="input-1">Name</label>
+                    <input type="text" class="form-control" id="input-1" th:field="*{name}" placeholder="Enter Product Name">
+                    <i class="pt-2 text-danger" th:errors="*{name}"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="input-2">Danh mục</label>
+                    <select class="form-control" id="input-2" th:field="*{productCategory}">
+                      <option th:each="ctg : ${listPC}" th:value="${ctg.id}" th:text="${ctg.productCategoryName}"></option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="input-3">Vật liệu</label>
+                    <select class="form-control" id="input-3" th:field="*{material}">
+                      <option th:each="mtl : ${mtllist}" th:value="${mtl.materialsId}" th:text="${mtl.materialName}"></option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="input-4">Ảnh</label>
+                    <input class="form-control" type="file" name="file" accept="image/*" multiple id="input-4"/>
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-light px-5"><i class="icon-lock"></i> Register</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div><!--End Row-->
+
+        <div th:replace="~{/views/admin/formColorDetailAndDimesionDetail}"></div>
+        <!--start overlay-->
+        <div class="overlay toggle-menu"></div>
+        <!--end overlay-->
+
+      </div>
+      <!-- End container-fluid-->
+
+    </div>
+  </main>
+</div>

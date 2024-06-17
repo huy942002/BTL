@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  th:fragment="dynamic(main)">
+<html>
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <!-- Site Metas -->
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" th:href="@{files/favicon.png}" type="image/gif" />
+
+    <title>Shapel</title>
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.css}" />
+
+    <!-- fonts style -->
+    <!--  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet" />-->
+
+    <!-- lightbox Gallery-->
+    <link rel="stylesheet" th:href="@{/css/ekko-lightbox.css}" />
+
+    <!-- font awesome style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <!-- responsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/docs.css}" rel="stylesheet" />
+    <script th:src="@{/js/bootstrap.bundle.min.js}"></script>
+
+</head>
+
+<body ng-app="app" ng-controller="cart-ctrl">
+
+<!-- header section strats -->
+<header class="header_section innerpage_header">
+    <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container">
+            <a class="navbar-brand" href="index">
+                <span>
+                  Shapel
+                </span>
+            </a>
+            <a th:href="@{|/cart/view|}" class="navbar-brand text-white"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l.84 4.479 9.144-.459L13.89 4zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+            </svg>Giỏ Hàng {{cart.count}}</a>
+            <div class="" id="">
+                <div class="custom_menu-btn">
+                    <button onclick="openNav()">
+                        <span class="s-1"> </span>
+                        <span class="s-2"> </span>
+                        <span class="s-3"> </span>
+                    </button>
+                    <div id="myNav" class="overlay">
+                        <div class="overlay-content">
+                            <a th:href="@{index}">Home</a>
+                            <a href="about.html">About</a>
+                            <a th:href="@{/product}">Gallery</a>
+                            <a href="service.html">Service</a>
+                            <a href="blog.html">Blog</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<!-- end header section -->
+
+<!-- gallery section -->
+
+<div class="gallery_section layout_padding">
+    <div class="container-fluid">
+        <main class="" th:insert="${main}"></main>
+    </div>
+</div>
+
+<!-- end gallery section -->
+
+
+<!-- info section -->
+<section class="info_section innerpage_info_section">
+    <div class="container">
+        <div class="row info_main_row">
+            <div class="col-md-6 col-lg-3">
+                <div class="info_insta">
+                    <h4>
+                        <a href="index.html" class="navbar-brand m-0 p-0">
+                <span>
+                  Shapel
+                </span>
+                        </a>
+                    </h4>
+                    <p class="mb-0">
+                        Asperiores at, error, delectus aut voluptatem provident cum quam magni necessitatibus molestias eveniet reprehenderit maiores voluptate.
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="info_detail">
+                    <h4>
+                        Company
+                    </h4>
+                    <p class="mb-0">
+                        when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to
+                    </p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h4>
+                    Contact Us
+                </h4>
+                <div class="info_contact">
+                    <a href="">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>
+                Location
+              </span>
+                    </a>
+                    <a href="">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <span>
+                Call +01 1234567890
+              </span>
+                    </a>
+                    <a href="">
+                        <i class="fa fa-envelope"></i>
+                        <span>
+                demo@gmail.com
+              </span>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <h4>
+                    Follow Us
+                </h4>
+                <div class="social_box">
+                    <a href="">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                    </a>
+                    <a href="">
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                    </a>
+                    <a href="">
+                        <i class="fa fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                    <a href="">
+                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- end info_section -->
+
+
+<!-- jQery -->
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<!-- bootstrap js -->
+<script th:src="@{/js/bootstrap.js}"></script>
+<!-- lightbox Gallery-->
+<script th:src="@{/js/ekko-lightbox.min.js}"></script>
+<!-- custom js -->
+<script th:src="@{/js/custom.js}"></script>
+
+<script th:src="@{/js/angular.min.js}"></script>
+<script th:src="@{/js/angular-route.js}"></script>
+<!--<script th:src="@{/js/jquery.min.js}"></script>-->
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/jsapp/shopping-cart-app.js}"></script>
+<script th:src="@{/jsapp/shopping-cart-ctrl.js}"></script>
+
+<script>
+    function filterItems() {
+            let selectedCategory = document.getElementById('categoryFilter').value;
+            let selectedTag = document.getElementById('materialFilter').value;
+            let searchText = document.getElementById('filterInput').value.toLowerCase();
+            let items = document.querySelectorAll('#dataContainer .item');
+            console.log(items);
+            items.forEach(item => {
+                let itemCategory = item.classList.contains(selectedCategory) || selectedCategory === '';
+                console.log(itemCategory+"///");
+                let itemTag = item.classList.contains(selectedTag) || selectedTag === '';
+                console.log(itemTag+"///");
+                let itemName = item.querySelector('.card-title').textContent.toLowerCase();
+                let matchesSearch = itemName.includes(searchText);
+                if (itemCategory && itemTag && matchesSearch) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    document.getElementById('categoryFilter').addEventListener('change', filterItems);
+    document.getElementById('materialFilter').addEventListener('change', filterItems);
+    document.getElementById('filterInput').addEventListener('input', filterItems);
+</script>
+
+</body>
+
+</html>

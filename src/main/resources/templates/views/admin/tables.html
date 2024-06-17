@@ -1,0 +1,414 @@
+<div xmlns:th="http://www.thymeleaf.org" th:replace="~{/views/admin/index :: dynamic (~{::main})}">
+    <main>
+        <div class="content-wrapper">
+            <div class="container-fluid">
+                <nav>
+                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                        <button class="btn-dark nav-link active" id="nav-home-tab" data-toggle="tab"
+                            data-target="#nav-home" type="button" role="tab" aria-controls="nav-home"
+                            aria-selected="true">Sản Phẩm
+                        </button>
+                        <button class="btn-dark nav-link" id="nav-category-tab" data-toggle="tab"
+                            data-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile"
+                            aria-selected="false">Thể Loại
+                        </button>
+                        <button class="btn-dark nav-link" id="nav-color-tab" data-toggle="tab" data-target="#nav-color"
+                            type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Màu và Kích
+                            Thước
+                        </button>
+                        <button class="btn-dark nav-link" id="nav-contact-tab" data-toggle="tab"
+                            data-target="#nav-Material" type="button" role="tab" aria-controls="nav-contact"
+                            aria-selected="false">Vật Liệu
+                        </button>
+                    </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                        <div class="row mt-3">
+                            <div class="col-lg-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bảng sản phẩm</h5>
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label for="filterInput">Search:</label>
+                                                <input type="text" class="form-control" id="filterInput" placeholder="Search..."></div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="categoryFilter">Thể Loại:</label>
+                                                    <select id="categoryFilter" class="form-control">
+                                                        <option value="">Tất cả thể loại</option>
+                                                        <option th:each="category : ${listPC}" th:text="${category.productCategoryName}" th:value="${category.id}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="materialFilter">Vật liệu:</label>
+                                                    <select id="materialFilter" class="form-control">
+                                                        <option value="">Tất cả vật liệu</option>
+                                                        <option th:each="material : ${item}" th:text="${material.materialName}" th:value="${material.materialName}"></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div class="form-group">
+                                                    <label for="statusFilter">Trạng Thái:</label>
+                                                    <select id="statusFilter" class="form-control">
+                                                        <option value="hd">Hoạt Động</option>
+                                                        <option value="khd">Không Hoạt Động</option>
+                                                        <option value="">Tất cả vật liệu</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered" id="dataTable">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên Sản Phẩm</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Thể Loại</th>
+                                                        <th>Vật Liệu</th>
+                                                        <th>Trạng Thái</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tableBody">
+                                                    <tr th:each="item : ${items}" th:id="'item-' + ${item.id}" th:class="'item ' + ${item.productCategory.id} + ' ' + ${item.material.materialName} +' '+${item.status==1? 'hd':'khd'}">
+                                                        <td th:text="${item.name}">[[${item.name}]]</td>
+                                                        <td><img th:src="@{|/assets/images/${item.img}|}" alt=""
+                                                                style="height: 150px; width:250px;"></td>
+                                                        <td th:text="${item.productCategory.productCategoryName}">
+                                                            [[${item.productCategory.productCategoryName}]]</td>
+                                                        <td th:text="${item.material.materialName}">
+                                                            [[${item.material.materialName}]]</td>
+                                                        <td>[[${item.status==1? "Hoạt động":"Không hoạt động"}]]</td>
+                                                        <td>
+                                                            <div class="row">
+                                                                <div class="col-6 pt-2 text-center">
+                                                                    <a class=""
+                                                                        th:href="@{/admin/edit/{id}(id=${item.id})}"
+                                                                        role="button">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16" fill="currentColor"
+                                                                            class="bi bi-pencil-square"
+                                                                            viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                            <path fill-rule="evenodd"
+                                                                                d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                                        </svg>
+                                                                    </a>
+                                                                </div>
+                                                                <div class="col-6 pt-2 text-center">
+                                                                    <a href="">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                                                            width="16" height="16" fill="currentColor"
+                                                                            class="bi bi-trash3" viewBox="0 0 16 16">
+                                                                            <path
+                                                                                d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                                                        </svg>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bảng Thể Loại</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên Thể Loại</th>
+                                                        <th>Tông Thể loại</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="productCategory : ${listPC}">
+                                                        <form
+                                                            th:action="@{'/admin/category/'+${productCategory.id}+'/'}"
+                                                            method="post">
+                                                            <td><input type="text" class="form-control-plaintext"
+                                                                    style="color: white;" id="staticEmail"
+                                                                    th:name="CategoryName"
+                                                                    th:value="${productCategory.productCategoryName}" />
+                                                            </td>
+                                                            <td><select class="form-control" th:name="ttid"
+                                                                    id="input-3">
+                                                                    <option th:each="ttc : ${listttc}"
+                                                                        th:selected="${productCategory.totalCategory.id == ttc.id}"
+                                                                        th:value="${ttc.id}" th:text="${ttc.name}">
+                                                                    </option>
+                                                                </select></td>
+                                                            <td class="text-center">
+                                                                <button type="submit" class="btn btn-link"
+                                                                    style="color: white;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bảng tổng thể loại</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên Tổng Thể Loại</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="t : ${listttc}">
+                                                        <form th:action="@{'/admin/totalcategory/'+${t.id}+'/'}"
+                                                            method="post">
+                                                            <td><input type="text" class="form-control-plaintext"
+                                                                    style="color: white;" id="staticEmail"
+                                                                    th:name="totalCategoryName" th:value="${t.name}" />
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="submit" class="btn btn-link"
+                                                                    style="color: white;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-color" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bảng Màu</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên Màu</th>
+                                                        <th>Ảnh</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="cl : ${colors}">
+                                                        <form th:action="@{'/admin/color/'+${cl.id}+'/'}" method="post"
+                                                            enctype="multipart/form-data">
+                                                            <td><input type="text" class="form-control-plaintext"
+                                                                    style="color: white;" id="staticEmail"
+                                                                    th:name="colorName" th:value="${cl.colorName}" />
+                                                            </td>
+                                                            <td><img th:src="@{|/assets/images/${cl.img}|}" alt=""
+                                                                    style="height: 100px; width:100px;">
+                                                                <input class="form-control" type="file" name="image"
+                                                                    accept="image/*" multiple />
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="submit" class="btn btn-link"
+                                                                    style="color: white;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Bảng kích thước</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Kích Thước</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="dms : ${dimensions}">
+                                                        <form th:action="@{'/admin/dimension/'+${dms.id}+'/'}"
+                                                            method="post">
+                                                            <td><input type="text" class="form-control-plaintext"
+                                                                    style="color: white;" id="staticEmail"
+                                                                    th:name="size" th:value="${dms.size}" /></td>
+                                                            <td class="text-center">
+                                                                <button type="submit" class="btn btn-link"
+                                                                    style="color: white;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="nav-Material" role="tabpanel" aria-labelledby="nav-contact-tab">
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Vật Liệu</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên Vật Liệu</th>
+                                                        <th>Giá</th>
+                                                        <th>Thể Loại Vật Liệu</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="mtl : ${mtllist}">
+                                                        <form th:action="@{'/admin/material/'+${mtl.materialsId}+'/'}"
+                                                            method="post">
+                                                            <td><input type="text" class="form-control-plaintext"
+                                                                    style="color: white;" id="staticEmail"
+                                                                    th:name="materialName"
+                                                                    th:value="${mtl.materialName}" /></td>
+                                                            <td><input type="number" class="form-control-plaintext"
+                                                                    style="color: white;" id="staticEmail"
+                                                                    th:name="price" th:value="${mtl.price}" /></td>
+                                                            <td>
+                                                                <select class="form-control" th:name="ttid"
+                                                                    id="input-3">
+                                                                    <option th:each="mt : ${mtlctg}"
+                                                                        th:selected="${mtl.materialCategory.id == mt.id}"
+                                                                        th:value="${mt.id}"
+                                                                        th:text="${mt.materialCategoryName}">
+                                                                    </option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="submit" class="btn btn-link"
+                                                                    style="color: white;">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                        height="16" fill="currentColor"
+                                                                        class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                        <path
+                                                                            d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                        <path fill-rule="evenodd"
+                                                                            d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Thể Loại Vật Liệu</h5>
+                                        <div class="table-responsive">
+                                            <table class="table table-hover table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tên Thể Loại Vật Liệu</th>
+                                                        <th>Thao tác</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="mtctg : ${mtlctg}">
+                                                        <td>[[${mtctg.materialCategoryName}]]</td>
+                                                        <td class="text-center">
+                                                            <button type="submit" class="btn btn-link"
+                                                                style="color: white;">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                                    height="16" fill="currentColor"
+                                                                    class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                                    <path
+                                                                        d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                                    <path fill-rule="evenodd"
+                                                                        d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z" />
+                                                                </svg>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!--End Row-->
+            </div>
+            <!-- End container-fluid-->
+        </div>
+    </main>
+</div>
